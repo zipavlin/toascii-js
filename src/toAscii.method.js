@@ -4,51 +4,51 @@
  *
  * This is a modification of fold-to-ascii.js (https://github.com/mplatt/fold-to-ascii-js).
  * Original (fold-to-ascii) functions were combined into a new string method.
- * Beside that characters database was limited to lowercase characters only 
+ * Beside that characters database was limited to lowercase characters only
  * and lower/uppercase transformation is used instead.
  * All credit goes to the original author.
  *
  * // USAGE
  * Use as any other method: string.toAscii();
- * 
+ *
  * // ORIGINAL LICENSE AND INFO
  * fold-to-ascii.js
  * https://github.com/mplatt/fold-to-ascii-js
- * 
+ *
  * This is a JavaScript port of the Apache Lucene ASCII Folding Filter.
- * 
+ *
  * The Apache Lucene ASCII Folding Filter is licensed to the Apache Software
  * Foundation (ASF) under one or more contributor license agreements. See the
  * NOTICE file distributed with this work for additional information regarding
  * copyright ownership. The ASF licenses this file to You under the Apache
  * License, Version 2.0 (the "License"); you may not use this file except in
  * compliance with the License. You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  * This port uses an example from the Mozilla Developer Network published prior
  * to August 20, 2010
- * 
+ *
  * fixedCharCodeAt is licencesed under the MIT License (MIT)
- * 
+ *
  * Copyright (c) 2013 Mozilla Developer Network and individual contributors
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -65,9 +65,9 @@ Object.defineProperty(String.prototype, 'toAscii', {
 		// DEFAULT CHARACTER REPLACEMENT
 		var defaultString = "_";
 		var replaceUnmapped = true;
-		
+
 		if (this === null) {return "";}
-		
+
 		var outStr = "";
 
 		for (var i = 0; i < this.length; i++) {
@@ -79,7 +79,7 @@ Object.defineProperty(String.prototype, 'toAscii', {
 			i = i || 0;
 			var code = this.toLowerCase().charCodeAt(i);
 			var hi, low;
-			
+
 			if (0xD800 <= code && code <= 0xDBFF) {
 				hi = code;
 				low = this.toLowerCase().charCodeAt(i + 1);
@@ -642,7 +642,8 @@ Object.defineProperty(String.prototype, 'toAscii', {
 							replacement = "z";
 							break;
 						default:
-							replacement = (replaceUnmapped ? defaultString : String.fromCharCode(charCode));
+              // we assume character is not a letter so we pass it on
+              replacement = this.charAt(i);
 							break;
 					}
 					// add it to string
